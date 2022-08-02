@@ -1,0 +1,18 @@
+extends base.pug
+
+block content
+  p= video.description
+  ul 
+    each hashtag in video.hashtags 
+      li= hashtag
+  small= video.createdAt
+  br
+  small 
+    | #{ video.meta.views } #{ video.meta.views <= 1 ? "view" : "views" }
+  br
+  small 
+    | #{ video.meta.rating } / 5
+  br
+  a(href=`${video.id}/edit`) Edit Video &rarr;
+  br
+  a(href=`${video.id}/delete`) Delete Video &rarr;
