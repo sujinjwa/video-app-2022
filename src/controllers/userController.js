@@ -2,6 +2,7 @@
 // const handleDelete = (req, res) => res.send("Delete User");
 
 import User from "../models/User";
+import bcrypt from "bcrypt";
 
 export const getJoin = (req, res) => {
   return res.render("join", { pageTitle: "Join" });
@@ -50,23 +51,33 @@ export const edit = (req, res) => res.send("Edit User");
 export const remove = (req, res) => res.send("Remove User");
 export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Login" });
+
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   // console.log(username, password);
 
+  const pageTitle = "Login";
   // 1번째. 입력한 username이 DB에 존재하는지 확인
-  const exists = await User.exists({ username });
-  if (!exists) {
+  const user = await User.findOne({ username });
+  if (!user) {
     // user가 존재하지 않는다면
     return res.status(400).render("login", {
-      pageTitle: "Login",
+      pageTitle,
       errorMessage: "An account with this username does not exists.",
     });
   }
 
   // 2번째. 입력한 password가 correct한지 확인
-
-  res.end();
+  const ok = await bcrypt.compare(password, user.password);
+  if (!ok) {
+    // 비밀번호가 일치하지 않는 경우
+    return res.status(400).render("login", {
+      pageTitle,
+      errorMessage: "Wrong Password",
+    });
+  }
+  console.log("Log User In! coming soon!");
+  return res.redirect("/");
 };
 export const logout = (req, res) => res.send("Log out");
 export const see = (req, res) => {
