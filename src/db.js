@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 // mongoose가 db에 연결되는 connection에 대한 액세스 줌
-mongoose.connect("mongodb://127.0.0.1:27017/wetube", {
+mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   // useFindAndModify: false,

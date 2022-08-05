@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRouter";
 import userRouter from "./routers/userRouter";
@@ -16,12 +17,14 @@ app.use(logger);
 app.use(express.urlencoded({ extended: true }));
 app.use("/assets", express.static("assets"));
 
+console.log(process.env.COOKIE_SECRET);
 // router 앞에서 session 미들웨어 추가
 app.use(
   session({
-    secret: "Hello!", // secret: 아무도 모르는 문자열
-    resave: true,
-    saveUninitialized: true,
+    secret: process.env.COOKIE_SECRET, // secret: 아무도 모르는 문자열
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.DB_URL }),
   })
 );
 
