@@ -17,7 +17,7 @@ app.use(logger);
 app.use(express.urlencoded({ extended: true }));
 app.use("/assets", express.static("assets"));
 
-console.log(process.env.COOKIE_SECRET);
+// console.log(process.env.COOKIE_SECRET);
 // router 앞에서 session 미들웨어 추가
 app.use(
   session({
