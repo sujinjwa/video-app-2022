@@ -81,6 +81,21 @@ export const postLogin = async (req, res) => {
   console.log("Log User In! coming soon!");
   return res.redirect("/");
 };
+
+export const startGithubLogin = (req, res) => {
+  const baseUrl = "https://github.com/login/oauth/authorize";
+  // configuration 객체
+  const config = {
+    clientId: "2e4bdc5f27cb55b784e1",
+    allow_signup: false,
+    scope: "read:user user:email", // 꼭 공백으로 나눠주어야 함
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUrl = `${baseUrl}?${params}`;
+  return res.redirect(finalUrl);
+};
+
+export const finishGithubLogin = (req, res) => {};
 export const logout = (req, res) => res.send("Log out");
 export const see = (req, res) => {
   console.log(req.params);
