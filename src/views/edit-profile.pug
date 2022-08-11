@@ -1,0 +1,35 @@
+extends base.pug
+
+block content
+  if errorMessage
+    p= errorMessage
+  form(method="POST")
+    input(
+      placeholder="name",
+      type="text",
+      name="name",
+      requried,
+      value=loggedInUser.name
+    )
+    input(
+      placeholder="email",
+      type="email",
+      name="email",
+      requried,
+      value=loggedInUser.email
+    )
+    input(
+      placeholder="username",
+      type="text",
+      name="username",
+      requried,
+      value=loggedInUser.username
+    )
+    input(
+      placeholder="location",
+      type="text",
+      name="location",
+      requried,
+      value=loggedInUser.location
+    )
+    input(type="submit", value="Update Profile")

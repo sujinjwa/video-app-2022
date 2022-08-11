@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 
-console.log(process.env.COOKIE_SECRET);
-console.log(process.env.DB_URL);
+// console.log(process.env.COOKIE_SECRET);
+// console.log(process.env.DB_URL);
+
 // mongoose가 db에 연결되는 connection에 대한 액세스 줌
 mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,
