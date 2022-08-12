@@ -115,6 +115,57 @@ export const postEdit = async (req, res) => {
   // };
   return res.redirect("/users/edit");
 };
+
+export const getChangePassword = (req, res) => {
+  // 로그인된 사용자의 정보 중 socialOnly값 확인하기
+  // console.log(req.session.user.socialOnly);
+
+  // 만약 현재 로그인된 유저가 깃헙으로 계정 생성한 유저라면
+  if (req.session.user.socialOnly === true) {
+    return res.status(400).render("edit-profile", {
+      pageTitle: "Edit, Profile",
+      errorMessage:
+        "You've made your account with Github. So, you don't have password!",
+    });
+  }
+  return res.render("change-password", { pageTitle: "Change Password" });
+};
+
+export const postChangePassword = async (req, res) => {
+  const { oldPassword, newPassword, newPasswordConfirmation } = req.body;
+  // console.log(req.session.user.password);
+
+  // oldPassword와 req.session.user.password가 동일한지 확인
+  if (oldPassword != req.session.user.password) {
+    return (
+      res.status(400).render("change-password"),
+      {
+        pageTitle: "Change Password",
+        errorMessage:
+          "You've input a wrong password. Please input your password that you've used",
+      }
+    );
+  }
+  // newPassword와 newPasswordConfirmation이 동일한지 확인
+  if (newPassword != newPasswordConfirmation) {
+    return (
+      res.status(400).render("change-password"),
+      {
+        pageTitle: "Change Password",
+        errorMessage: "New password does not match the password confirmation.",
+      }
+    );
+  }
+
+  // 위 조건 두가지 모두 만족할 경우 새로운 비밀번호로 업데이트
+  const id = req.session.user.id;
+  await User.findByIdAndUpdate(id, {
+    password: newPassword,
+  });
+
+  // send notification "you've changed your password! good!"
+  return res.redirect("/");
+};
 export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Login" });
 

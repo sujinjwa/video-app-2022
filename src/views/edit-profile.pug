@@ -33,3 +33,8 @@ block content
       value=loggedInUser.location
     )
     input(type="submit", value="Update Profile")
+
+    // 깃헙으로 계정 생성한 유저가 아니라, 이메일/비번으로 계정 생성한 유저일 경우에만
+    if loggedInUser.socialOnly == false
+      hr
+      a(href="change-password") Change Password &rarr;
