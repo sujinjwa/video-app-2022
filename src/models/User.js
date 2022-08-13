@@ -19,9 +19,9 @@ userSchema.pre("save", async function () {
   // this := create되는 User 의미
   // 5번 해싱 (saltRounds)
   // 코랙 함수 필요 없음. await 쓰고 있으므로
-  console.log("users password:", this.password);
+  // console.log("users password:", this.password);
   this.password = await bcrypt.hash(this.password, 5);
-  console.log("hashed pasword:", this.password);
+  // console.log("hashed pasword:", this.password);
 });
 
 // mongo와 mongoose에 스키마 알려준 후

@@ -132,40 +132,57 @@ export const getChangePassword = (req, res) => {
 };
 
 export const postChangePassword = async (req, res) => {
-  const { oldPassword, newPassword, newPasswordConfirmation } = req.body;
-  // console.log(req.session.user.password);
+  // 비밀번호를 바꾸려고 하는 유저가 누구인지 찾고,
+  // 동시에 유저가 UI form에 입력한 값 가져오기
+  const {
+    session: {
+      user: { _id, password }, // 현재 로그인된 사용자 확인
+    },
+    body: { oldPassword, newPassword, newPasswordConfirmation }, // form에서 정보 가져오기
+  } = req;
 
   // oldPassword와 req.session.user.password가 동일한지 확인
-  if (oldPassword != req.session.user.password) {
-    return (
-      res.status(400).render("change-password"),
-      {
-        pageTitle: "Change Password",
-        errorMessage:
-          "You've input a wrong password. Please input your password that you've used",
-      }
-    );
+  // 1) 노마드 코드
+  const ok = await bcrypt.compare(oldPassword, password);
+
+  if (!ok) {
+    return res.status(400).render("change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "The currnet password is incorrect",
+    });
   }
+  // 2) 내가 작성한 잘못된 코드
+  //if (oldPassword != password) {
+  //  return res.status(400).render("change-password", {
+  //    pageTitle: "Change Password",
+  //    errorMessage:
+  //      "You've input a wrong password. Please input your password that you've used",
+  //  });
+  //}
   // newPassword와 newPasswordConfirmation이 동일한지 확인
   if (newPassword != newPasswordConfirmation) {
-    return (
-      res.status(400).render("change-password"),
-      {
-        pageTitle: "Change Password",
-        errorMessage: "New password does not match the password confirmation.",
-      }
-    );
+    return res.status(400).render("change-password", {
+      pageTitle: "Change Password",
+      errorMessage:
+        "The new password does not match the password-confirmation.",
+    });
   }
 
-  // 위 조건 두가지 모두 만족할 경우 새로운 비밀번호로 업데이트
-  const id = req.session.user.id;
-  await User.findByIdAndUpdate(id, {
-    password: newPassword,
-  });
+  // 유저 찾기
+  const user = await User.findById(_id);
+  user.password = newPassword;
+  await user.save(); // user.save() 를 하면 User.js 파일의 pre save middleware가 작동함
+  req.session.user.password = user.password; // 여기서는 user.password가 해시화 돼 있다!
+
+  // 위 조건 두가지 모두 만족하지 않을 경우 새로운 비밀번호로 업데이트
+  //await User.findByIdAndUpdate(_id, {
+  //  password: await bcrypt.hash(newPassword, 5),
+  //});
 
   // send notification "you've changed your password! good!"
-  return res.redirect("/");
+  return res.redirect("logout");
 };
+
 export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Login" });
 
