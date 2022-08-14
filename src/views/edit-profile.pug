@@ -3,7 +3,9 @@ extends base.pug
 block content
   if errorMessage
     p= errorMessage
-  form(method="POST")
+  form(method="POST", enctype="multipart/form-data")
+    label(for="avatar") Avatar
+    input#avatar(type="file", name="avatar", accept="image/*")
     input(
       placeholder="name",
       type="text",

@@ -62,9 +62,10 @@ export const postEdit = async (req, res) => {
   // req에서 session과 body를 한번에 받는 방법
   const {
     session: {
-      user: { _id },
+      user: { _id, avatarUrl },
     },
     body: { name, email, username, location },
+    file,
   } = req;
   // const id = req.session.user.id;
   // const { name, email, username, location } = req.body; // form으로부터 받아옴. 이때, form의 input name 태그 이름과 동일하게 받아와야 함
@@ -91,6 +92,7 @@ export const postEdit = async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
+      avatarUrl: file ? file.path : avatarUrl,
       name,
       email,
       username,

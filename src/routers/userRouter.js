@@ -11,6 +11,7 @@ import {
 } from "../controllers/userController";
 import { protectorMiddleware } from "../middlewares";
 import { publicOnlyMiddleware } from "../middlewares";
+import { uploadFiles } from "../middlewares";
 
 const userRouter = express.Router();
 
@@ -21,7 +22,11 @@ userRouter.get("/logout", protectorMiddleware, logout);
 //  .post(protectorMiddleware, postEdit);
 // 위 주석달린 버전처럼 get, post 모두에 middleware 넣는 방식 말고,
 // 아래와 같이 .all() 을 통해 한번에 middleware 적용 가능!
-userRouter.route("/edit").all(protectorMiddleware).get(getEdit).post(postEdit);
+userRouter
+  .route("/edit")
+  .all(protectorMiddleware)
+  .get(getEdit)
+  .post(uploadFiles.single("avatar"), postEdit);
 userRouter
   .route("/change-password")
   .all(protectorMiddleware)

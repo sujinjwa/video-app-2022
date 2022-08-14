@@ -1,9 +1,11 @@
+import multer from "multer";
+
 export const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "Wetube";
   res.locals.loggedIn = Boolean(req.session.loggedIn);
   res.locals.loggedInUser = req.session.user;
   // console.log(res.locals);
-  console.log(req.session.user);
+  // console.log(req.session.user);
   next();
 };
 
@@ -23,3 +25,5 @@ export const publicOnlyMiddleware = (req, res, next) => {
     return res.redirect("/"); // 로그인된 유저라면 home 화면으로 리디렉션
   }
 };
+
+export const uploadFiles = multer({ dest: "uploads/" });

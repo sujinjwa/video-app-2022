@@ -1,4 +1,5 @@
 import express from "express";
+// import multer from "multer";
 import morgan from "morgan";
 import session from "express-session";
 import MongoStore from "connect-mongo";
@@ -8,7 +9,7 @@ import userRouter from "./routers/userRouter";
 import { localsMiddleware } from "./middlewares";
 
 const app = express();
-
+// const multer = require("multer");
 const logger = morgan("dev");
 
 app.set("view engine", "pug");
