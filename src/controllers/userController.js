@@ -340,9 +340,14 @@ export const logout = (req, res) => {
   req.session.destroy(); // 세션 없애기
   return res.redirect("/"); // 홈 화면으로 리디렉션
 };
-export const see = (req, res) => {
-  console.log(req.params);
-  console.log(req.params.id);
-  return res.send(`See User #${req.params.id}`);
-  // 이때 id는 '/:id'
+export const see = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  if (!user) {
+    return res.status(404).render("404", { pageTitle: "User not found" });
+  }
+  return res.render("profile", {
+    pageTitle: user.name,
+    user,
+  });
 };

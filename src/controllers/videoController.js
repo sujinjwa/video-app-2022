@@ -79,12 +79,14 @@ export const getUpload = (req, res) => {
 };
 
 export const postUpload = async (req, res) => {
+  const { path: videoUrl } = req.file;
   const { title, description, hashtags } = req.body; // form 통해 사용자로부터 받은 data
   // 새로운 Video Model 생성
   try {
     await Video.create({
       title: title,
       description: description,
+      videoUrl,
       hashtags: Video.formatHashtags(hashtags),
     });
     return res.redirect("/"); // go home

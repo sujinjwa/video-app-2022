@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 
 const videoSchema = new mongoose.Schema({
-  title: { type: String, required: true, maxLength: 80 }, // String 도 가능
+  title: { type: string, required: true, maxLength: 80 }, // String 도 가능
+  videoUrl: { type: String, required: true },
   description: { type: String, required: true, minLength: 20 },
   createdAt: { type: Date, required: true, default: Date.now }, // 자동 생성 가능
   hashtags: [{ type: String, trim: true }], // String형 원소 가지는 array
@@ -10,6 +11,7 @@ const videoSchema = new mongoose.Schema({
     views: { type: Number, default: 0, required: true },
     rating: { type: Number, default: 0, required: true },
   },
+  owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
 });
 
 videoSchema.static("formatHashtags", function (hashtags) {

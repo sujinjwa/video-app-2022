@@ -19,11 +19,11 @@ html(lang="ko")
             li 
               a(href="/videos/upload") Upload Video
             li 
+              a(href=`/users/${loggedInUser._id}`) #{ loggedInUser.username }의 Profile
+            li 
               a(href="/users/edit") Edit Profile
             li 
               a(href="/users/logout") Log Out
-            li 
-              a(href=`/users/${loggedInUser._id}`) #{ loggedInUser.username }의 Profile
           else
             li 
               a(href="/join") Join
