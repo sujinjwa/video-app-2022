@@ -2,6 +2,7 @@
 // const handleDelete = (req, res) => res.send("Delete User");
 
 import User from "../models/User";
+import Video from "../models/Video";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 import { token } from "morgan";
@@ -346,6 +347,8 @@ export const see = async (req, res) => {
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found" });
   }
+  const videos = await Video.find({ owner: user._id }); // onwer가 동일한 모든 videos 찾기
+  console.log(videos);
   return res.render("profile", {
     pageTitle: user.name,
     user,

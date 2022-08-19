@@ -1,5 +1,6 @@
 import { Exception } from "sass";
 import Video from "../models/Video";
+import User from "../models/User";
 
 const handleSearch = (error, videos) => {
   console.log("errors: ", error);
@@ -63,13 +64,17 @@ export const search = async (req, res) => {
 export const watch = async (req, res) => {
   // const id = req.params.id;
   const { id } = req.params;
-  const video = await Video.findById(id);
+  const video = await Video.findById(id).populate("owner"); // req.params.id 통해 비디오 찾기
+  // populate(relationship)을 통해 video의 owner 부분을 User의 id로 바꿔주기
+  console.log(video);
+  // const owner = await User.findById(video.owner); // 비디오의 owner 통해 업로드한 유저 찾기
   if (!video) {
     // (!video) 도 가능
     // 존재하지 않는 video에 접근한 경우
     return res.render("404", { pageTitle: "Video Not Found" });
   }
   // video 존재하는 경우
+  console.log(video);
   return res.render("watch", { pageTitle: video.title, video });
 };
 
@@ -79,6 +84,9 @@ export const getUpload = (req, res) => {
 };
 
 export const postUpload = async (req, res) => {
+  const {
+    user: { _id },
+  } = req.session;
   const { path: videoUrl } = req.file;
   const { title, description, hashtags } = req.body; // form 통해 사용자로부터 받은 data
   // 새로운 Video Model 생성
@@ -88,6 +96,7 @@ export const postUpload = async (req, res) => {
       description: description,
       videoUrl,
       hashtags: Video.formatHashtags(hashtags),
+      owner: _id,
     });
     return res.redirect("/"); // go home
   } catch (error) {

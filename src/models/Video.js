@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const videoSchema = new mongoose.Schema({
-  title: { type: string, required: true, maxLength: 80 }, // String 도 가능
+  title: { type: String, required: true, maxLength: 80 }, // String 도 가능
   videoUrl: { type: String, required: true },
   description: { type: String, required: true, minLength: 20 },
   createdAt: { type: Date, required: true, default: Date.now }, // 자동 생성 가능
