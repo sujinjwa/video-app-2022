@@ -75,7 +75,7 @@ export const postEdit = async (req, res) => {
   // const id = user.id;
 
   // 이미 생성된 동일한 username 또는 email 있는지 확인
-  // 이때, 본인의 username 혹은 email 값과 동일한 경우는 제외해줘야 함
+  // 이때, 현재 로그인한 유저 본인의 username 혹은 email 값과 동일한 경우는 제외해줘야 함
   const exists = await User.exists({ $or: [{ username }, { email }] });
   // console.log(exists); // exists의  _id 가 출력된다
 
@@ -83,7 +83,7 @@ export const postEdit = async (req, res) => {
 
   if (exists && existingUser._id != req.session.user._id) {
     // 만약 동일한 username 혹은 email 이 db에 있다면
-    // 그런데 로그인한 유저와 이미 d동일한 username 혹은 email 가진 유저가 다른 사람이라면
+    // 그런데 로그인한 유저와 이미 동일한 username 혹은 email 가진 유저가 다른 사람이라면
     return res.status(400).render("edit-profile", {
       errorMessage:
         "This username/email is already taken. Please change your username",
@@ -343,12 +343,12 @@ export const logout = (req, res) => {
 };
 export const see = async (req, res) => {
   const { id } = req.params;
-  const user = await User.findById(id);
+  const user = await User.findById(id).populate("videos");
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found" });
   }
-  const videos = await Video.find({ owner: user._id }); // onwer가 동일한 모든 videos 찾기
-  console.log(videos);
+  // const videos = await Video.find({ owner: user._id }); // onwer가 동일한 모든 videos 찾기
+  // console.log(user);
   return res.render("profile", {
     pageTitle: user.name,
     user,

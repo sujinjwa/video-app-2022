@@ -91,13 +91,16 @@ export const postUpload = async (req, res) => {
   const { title, description, hashtags } = req.body; // form 통해 사용자로부터 받은 data
   // 새로운 Video Model 생성
   try {
-    await Video.create({
+    const newVideo = await Video.create({
       title: title,
       description: description,
       videoUrl,
       hashtags: Video.formatHashtags(hashtags),
       owner: _id,
     });
+    const user = await User.findById(_id);
+    user.videos.push(newVideo._id);
+    user.save();
     return res.redirect("/"); // go home
   } catch (error) {
     return res.status(400).render("upload", {
