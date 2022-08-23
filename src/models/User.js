@@ -21,7 +21,11 @@ userSchema.pre("save", async function () {
   // 5번 해싱 (saltRounds)
   // 코랙 함수 필요 없음. await 쓰고 있으므로
   // console.log("users password:", this.password);
-  this.password = await bcrypt.hash(this.password, 5);
+  if (this.isModified("password")) {
+    // isModified() : property가 하나라도 수정되면 true 아니면 false
+    // password가 수정된 경우에만 해싱
+    this.password = await bcrypt.hash(this.password, 5);
+  }
   // console.log("hashed pasword:", this.password);
 });
 
