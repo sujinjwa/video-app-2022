@@ -1,11 +1,22 @@
 mixin video(video)
-  div
-    h4
-      a(href=`/videos/${video.id}`)= video.title
-      // #{video.title} 도 가능!
-    p= video.description
-    ul
-      each hashtag in video.hashtags
-        li= hashtag
-    small= video.createdAt
-    hr
+  .video
+    a(href=`/videos/${video.id}`)
+      img.video__img(src="", alt="")
+      .main_info
+        img.uploader(src=`${video.owner.avatarUrl}`)
+        h1.title= video.title
+      .sub_info
+        p= video.owner.username
+        p 조회수 *회
+        p= video.createdAt
+
+  //- div
+  //-   h4
+  //-     a(href=`/videos/${video.id}`)= video.title
+  //-     // #{video.title} 도 가능!
+  //-   p= video.description
+  //-   ul
+  //-     each hashtag in video.hashtags
+  //-       li= hashtag
+  //-   small= video.createdAt
+  //-   hr

@@ -8,8 +8,16 @@ const handleSearch = (error, videos) => {
 };
 
 export const home = async (req, res) => {
-  const videos = await Video.find({}).sort({ createdAt: "desc" }); // home 화면에 보여줄 videos 찾기
+  const allVideos = await Video.find({}).sort({ createdAt: "desc" }); // home 화면에 보여줄 videos 찾기
   // console.log(videos);
+  const videos = [];
+
+  // populate 이용하여 모든 비디오에 user의 데이터도 함께 합쳐서 보내주기
+  for (var i = 0; i < allVideos.length; i++) {
+    var video = await Video.findById(allVideos[i]._id).populate("owner");
+    videos.push(video);
+  }
+
   return res.render("home", { pageTitle: "Home", videos });
 };
 

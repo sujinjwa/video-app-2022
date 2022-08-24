@@ -1,7 +1,34 @@
 header
   nav 
     ul 
-      li 
-        a(href="/videos/upload") Hello this is upload link
-      li
-        | #{ pageTitle }
+      .col1
+        li.bar 
+          i.fa-solid.fa-bars
+        li.home
+          a(href="/") 
+            i.fa-brands.fa-youtube
+            p WeTube
+      .col2
+        li.search
+          a(href="/search")
+            button 
+              | 검색
+              i.fa-solid.fa-magnifying-glass
+      .col3
+        if loggedIn
+          li 
+            a(href="/videos/upload") Upload Video
+          li 
+            a(href=`/users/${loggedInUser._id}`) #{ loggedInUser.username }의 Profile
+          li 
+            a(href="/users/edit") Edit Profile
+          li 
+            a(href="/users/logout") Log Out
+        else
+          li.join 
+            a(href="/join") 
+              | 회원가입
+          li.login 
+            a(href="/login") 
+              i.fa-regular.fa-circle-user
+              | 로그인

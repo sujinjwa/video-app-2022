@@ -2,12 +2,9 @@ extends base
 include mixins/video
 
 block content
-  //- nav
-  //-   ul
-  //-     li
-  //-       a(href="/videos/upload") Upload Video
-  each video in videos
-    // videos: home 컨트롤러에서 db에 저장된 모든 비디오 데이터 모음
-    +video(video)
-  else
-    h1 Sorry, nothing found.
+  section.videos
+    each video in videos
+      // videos: home 컨트롤러에서 db에 저장된 모든 비디오 데이터 모음
+      +video(video)
+    else
+      h1 Sorry, nothing found.
