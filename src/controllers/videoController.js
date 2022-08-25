@@ -8,16 +8,21 @@ const handleSearch = (error, videos) => {
 };
 
 export const home = async (req, res) => {
-  const allVideos = await Video.find({}).sort({ createdAt: "desc" }); // home 화면에 보여줄 videos 찾기
+  // const allVideos = await Video.find({}).sort({ createdAt: "desc" }); // home 화면에 보여줄 videos 찾기
+  // // console.log(videos);
+  // const videos = [];
+
+  // // populate 이용하여 모든 비디오에 user의 데이터도 함께 합쳐서 보내주기
+  // for (var i = 0; i < allVideos.length; i++) {
+  //   var video = await Video.findById(allVideos[i]._id).populate("owner");
+  //   videos.push(video);
+  // }
+
+  const videos = await Video.find({})
+    .sort({ createdAt: "desc" })
+    .populate("owner");
+
   // console.log(videos);
-  const videos = [];
-
-  // populate 이용하여 모든 비디오에 user의 데이터도 함께 합쳐서 보내주기
-  for (var i = 0; i < allVideos.length; i++) {
-    var video = await Video.findById(allVideos[i]._id).populate("owner");
-    videos.push(video);
-  }
-
   return res.render("home", { pageTitle: "Home", videos });
 };
 
@@ -89,7 +94,7 @@ export const watch = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id).populate("owner"); // req.params.id 통해 비디오 찾기
   // populate(relationship)을 통해 video의 owner 부분을 User의 id로 바꿔주기
-  console.log(video);
+  // console.log(video);
   // const owner = await User.findById(video.owner); // 비디오의 owner 통해 업로드한 유저 찾기
   if (!video) {
     // (!video) 도 가능

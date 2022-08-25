@@ -1,16 +1,16 @@
-div.video {
-  height: 80%;
-  a {
-    img.video__img {
+div.video-mixin {
+  // height: 150px;
+  a.video-mixin__link {
+    img.video-mixin__img {
       width: 100%;
       height: 200px; // 나중에 수정
     }
-    div.main_info {
+    div.video-mixin__main-info {
       display: flex;
       justify-content: flex-start;
       align-items: center;
       margin: 8px 0px;
-      img.uploader {
+      img.uploader__img {
         width: 35px;
         border-radius: 50%;
       }
@@ -20,13 +20,28 @@ div.video {
         font-size: 20px;
       }
     }
-    div.sub_info {
+    .video-mixin__sub-info {
       margin-left: 45px;
       p {
         font-size: 16px;
         margin: 3px 0px;
         color: $light--grey;
         line-height: 1.4;
+      }
+    }
+  }
+}
+
+a.video-mixin {
+  .wrapper {
+    img {
+      width: 100%;
+    }
+  }
+  .video-mixin__main-info {
+    a.uploader {
+      img {
+        width: 35px;
       }
     }
   }

@@ -2,23 +2,32 @@ extends base.pug
 
 block content
   video(src=`/${video.videoUrl}`, controls, width="900")
-  p= video.description
-  ul 
-    each hashtag in video.hashtags 
-      li= hashtag
-  small= video.createdAt
-  br
-  div
-    small Uploaded by
-      a(href=`/users/${video.owner._id}`) #{ video.owner.name }
-  br
-  small 
-    | #{ video.meta.views } #{ video.meta.views <= 1 ? "view" : "views" }
-  br
-  small 
-    | #{ video.meta.rating } / 5
-  br
-  if loggedIn && String(video.owner._id) === String(loggedInUser._id)
-    a(href=`${video.id}/edit`) Edit Video &rarr;
-    br
-    a(href=`${video.id}/delete`) Delete Video &rarr;
+  div 
+    button#play Play
+    button#mute Mute
+    span#time 00:00/00:00
+    input#volume(type="range", step="0.1", min="0", max="1")
+
+  //- p= video.description
+  //- ul 
+  //-   each hashtag in video.hashtags 
+  //-     li= hashtag
+  //- small= video.createdAt
+  //- br
+  //- div
+  //-   small Uploaded by
+  //-     a(href=`/users/${video.owner._id}`) #{ video.owner.name }
+  //- br
+  //- small 
+  //-   | #{ video.meta.views } #{ video.meta.views <= 1 ? "view" : "views" }
+  //- br
+  //- small 
+  //-   | #{ video.meta.rating } / 5
+  //- br
+  //- if loggedIn && String(video.owner._id) === String(loggedInUser._id)
+  //-   a(href=`${video.id}/edit`) Edit Video &rarr;
+  //-   br
+  //-   a(href=`${video.id}/delete`) Delete Video &rarr;
+
+block scripts
+  script(src="/assets/js/videoPlayer.js")

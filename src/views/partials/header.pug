@@ -18,8 +18,14 @@ header
         if loggedIn
           li 
             a(href="/videos/upload") Upload Video
-          li 
+          li.user__profile
             a(href=`/users/${loggedInUser._id}`) #{ loggedInUser.username }의 Profile
+              if !loggedInUser.avatarUrl
+                // 만약 로그인한 유저에게 프로필 사진이 없다면
+                i.fa-solid.fa-face-grin-wink
+              else
+                // 프로필 사진 있다면
+                img.header__avatar(src=loggedInUser.avatarUrl)
           li 
             a(href="/users/edit") Edit Profile
           li 
