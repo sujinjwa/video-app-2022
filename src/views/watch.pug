@@ -1,12 +1,21 @@
 extends base.pug
 
 block content
-  video(src=`/${video.videoUrl}`, controls, width="900")
-  div 
-    button#play Play
-    button#mute Mute
-    span#time 00:00/00:00
-    input#volume(type="range", step="0.1", value=0.5, min="0", max="1")
+  // videos의 control 속성 없앰
+  #videoContainer 
+    video(src=`/${video.videoUrl}`, width="900")
+    div 
+      button#play Play
+      button#mute Mute
+      div 
+        span#currentTime 00:00
+        span /
+        span#totalTime 00:00
+      input#volume(type="range", step="0.1", value=0.5, min="0", max="1")
+      div 
+        input#timeline(type="range", step="1", min="0", value=0)
+      div 
+        button#fullScreen Enter Full Screen
 
   //- p= video.description
   //- ul 
@@ -24,10 +33,10 @@ block content
   //- small 
   //-   | #{ video.meta.rating } / 5
   //- br
-  //- if loggedIn && String(video.owner._id) === String(loggedInUser._id)
-  //-   a(href=`${video.id}/edit`) Edit Video &rarr;
-  //-   br
-  //-   a(href=`${video.id}/delete`) Delete Video &rarr;
+  if loggedIn && String(video.owner._id) === String(loggedInUser._id)
+    a(href=`${video.id}/edit`) Edit Video &rarr;
+    br
+    a(href=`${video.id}/delete`) Delete Video &rarr;
 
 block scripts
   script(src="/assets/js/videoPlayer.js")
