@@ -1,0 +1,91 @@
+#videoContainer {
+  position: relative;
+  padding: 0px 30px;
+  video {
+    width: 950px;
+  }
+  #videoControls {
+    position: absolute;
+    bottom: 5px;
+    left: 45px;
+    width: 950px;
+    height: 65px;
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+    &.show {
+      visibility: visible;
+    }
+    .videoControls__row1 {
+      display: flex;
+      align-items: center;
+      input#timeline {
+        width: 84%;
+        margin-right: 10px;
+        -webkit-appearance: none; /* range type의 input 에 default CSS styles 설정 */
+        background-color: $light--grey--font;
+        opacity: 0.7;
+        height: 4px;
+        cursor: pointer;
+        &:hover {
+          height: 6px;
+        }
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          width: 13px;
+          height: 13px;
+          background-color: white;
+          opacity: 1;
+          border-radius: 50%;
+        }
+      }
+      div#times {
+        font-size: 18px;
+      }
+    }
+    .videoControls__row2 {
+      width: 96%;
+      margin: 0px 8px;
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      div {
+        display: flex;
+        align-items: center;
+        button {
+          background: none;
+          cursor: pointer;
+          color: white;
+          border: none;
+          &#play {
+            margin-right: 20px;
+          }
+          &#mute {
+            margin-right: 10px;
+          }
+          i {
+            font-size: 20px;
+          }
+        }
+        input#volume {
+          width: 70px;
+          -webkit-appearance: none; /* range type의 input 에 default CSS styles 설정 */
+          background-color: $light--grey--font;
+          opacity: 0.7;
+          height: 4px;
+          cursor: pointer;
+          visibility: none;
+          &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 13px;
+            height: 13px;
+            background-color: white;
+            opacity: 1;
+            border-radius: 50%;
+          }
+        }
+      }
+    }
+  }
+}

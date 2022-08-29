@@ -7,7 +7,8 @@
 @import "./components/video";
 
 // Screens
-@import "./screens/home.scss";
+@import "./screens/home";
+@import "./screens/watch";
 
 // Defaults
 a {
@@ -24,4 +25,30 @@ body {
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   background-color: $bg;
   color: white;
+}
+
+main {
+  width: 100vw;
+  margin: 0 auto;
+  max-width: 1450px;
+  padding: 22px 0px;
+}
+
+// 스크롤 바 영역 전체
+html::-webkit-scrollbar {
+  width: 12px; // 스크롤바 너비
+  background-color: $bg;
+}
+
+// 스크롤 바 막대
+html::-webkit-scrollbar-thumb {
+  border-radius: 25px;
+  background-color: $light--grey--font;
+  background-clip: padding-box;
+  border: 2px solid transparent; // 테두리 투명으로 설정
+}
+
+// 스크롤바 막대 외부 여백
+html::-webkit-scrollbar-track {
+  background-color: $bg;
 }

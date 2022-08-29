@@ -4,7 +4,7 @@ mixin video(video)
       img.video-mixin__img(src="", alt="") 
       .video-mixin__main-info 
         img.uploader__img(src=`${video.owner.avatarUrl}`) 
-        h1.title= video.title
-      .video-mixin__sub-info 
-        p= video.owner.username
-        p 조회수 #{ video.meta.views } 회
+        .main-info__col2
+          h1.title= video.title
+          p.ownername= video.owner.username
+          p 조회수 #{ video.meta.views }회
