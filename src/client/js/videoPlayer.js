@@ -15,6 +15,7 @@ video.volume = volumeValue; // video.volume에 기본값 적용
 const handlePlayClick = () => {
   // if the video is playing, pause it
   // else play the video
+
   if (video.paused) {
     video.play();
   } else {
@@ -24,6 +25,14 @@ const handlePlayClick = () => {
   playBtn.childNodes[0].className = video.paused
     ? "fa-solid fa-play"
     : "fa-solid fa-pause";
+};
+
+const playVideoWithSpaceBar = (event) => {
+  // 키보드에서 클릭한 게 '스페이스 바'인 경우에만
+  // hadnlePlayClick 함수 실행
+  if (event.code === "Space") {
+    handlePlayClick();
+  }
 };
 
 const handleMuteClick = () => {
@@ -47,8 +56,8 @@ const handleVolumeChange = (event) => {
   volumeValue = value; // 볼륨 range 바뀔때마다 volumeValue도 그 값으로 변경
   video.volume = value;
 
-  // 아래 코드에서 아이콘 바꾸기 이전에
-  // 위에서 video.volume과 v
+  // 아래 코드에서 아이콘 바꾸기 이전에 위 코드에서 volumeValue와 video.volume 값을 갱신해주어야
+  // 아이콘과 video.muted 값이 제때 갱신됨
   if (video.volume > 0) {
     video.muted = false;
     muteBtn.childNodes[0].className = "fa-solid fa-volume-high";
@@ -87,17 +96,32 @@ const handleTimelineChange = () => {
 // 비디오 full-screen mode 사용 or 사용하지 않도록 설정
 const handleFullScreen = () => {
   const fullscreen = document.fullscreenElement; // 화면이 full screen 상태인지 아닌지 확인
-
+  //const timeline = document.querySelector("input#timeline");
   // 풀스크린 상태가 아닌 경우
   if (!fullscreen) {
     videoContainer.requestFullscreen(); // 주의할 점! video 요소말고, 모든 기본 버튼까지 포함된 videoContainer에 적용해줘야 함
-    fullScreenBtn.childNodes[0].className = "fa-solid fa-compress";
+    //timeline.classList.add("fullscreen");
+    // console.log(fullScreenBtn.childNodes);
   } else {
     // 풀스크린 상태인 경우
     document.exitFullscreen(); // 풀 스크린 모드 해제
-    fullScreenBtn.childNodes[0].className = "fa-solid fa-expand";
   }
+
+  fullScreenBtn.childNodes[1].className = fullscreen
+    ? "fa-solid fa-expand"
+    : "fa-solid fa-compress";
+  //timeline.classList.remove("fullscreen");
 };
+
+// const exitFullScreen = (event) => {
+//   console.log(event);
+//   console.log(event.key === "Escape");
+//   if (event.key === "Escape") {
+//     document.exitFullscreen(); // 풀 스크린 모드 해제
+//     video.classList.remove("fullscreen");
+//     fullScreenBtn.childNodes[0].className = "fa-solid fa-expand";
+//   }
+// };
 
 let controlsTimeout = null;
 let controlsMovementTimeout = null;
@@ -131,11 +155,13 @@ const handleMouseLeave = () => {
 };
 
 playBtn.addEventListener("click", handlePlayClick);
+video.addEventListener("click", handlePlayClick);
+window.addEventListener("keydown", playVideoWithSpaceBar, event);
 muteBtn.addEventListener("click", handleMuteClick);
 volumeRange.addEventListener("input", handleVolumeChange);
 video.addEventListener("loadedmetadata", handleLoadedMetaData);
 video.addEventListener("timeupdate", handleTimeUpdate);
 timeline.addEventListener("input", handleTimelineChange);
 fullScreenBtn.addEventListener("click", handleFullScreen);
-video.addEventListener("mousemove", handleMouseMove);
-video.addEventListener("mouseleave", handleMouseLeave);
+videoContainer.addEventListener("mousemove", handleMouseMove);
+videoContainer.addEventListener("mouseleave", handleMouseLeave);
