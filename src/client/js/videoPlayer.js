@@ -154,6 +154,12 @@ const handleMouseLeave = () => {
   // clearTimeout(id); // timeout이 취소됨
 };
 
+const handleEnded = () => {
+  const { id } = videoContainer.dataset;
+
+  fetch(`/api/videos/${id}/view`, { method: "POST" }); // 비디오 재생 끝난 경우 해당 URL로 api POST 요청
+};
+
 playBtn.addEventListener("click", handlePlayClick);
 video.addEventListener("click", handlePlayClick);
 window.addEventListener("keydown", playVideoWithSpaceBar, event);
@@ -165,3 +171,5 @@ timeline.addEventListener("input", handleTimelineChange);
 fullScreenBtn.addEventListener("click", handleFullScreen);
 videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
+
+video.addEventListener("ended", handleEnded);

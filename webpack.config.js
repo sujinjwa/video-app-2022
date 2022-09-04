@@ -6,9 +6,10 @@ module.exports = {
   entry: {
     main: "./src/client/js/main.js", // 변환되기 전 내가 작성할 코드의 경로
     videoPlayer: "./src/client/js/videoPlayer.js",
+    recorder: "./src/client/js/recorder.js",
   },
-  mode: "development", // 개발 중이라는 의미 (코드 압축 X 에러 쉽게 확인 O)
-  watch: true, // watch 모드 : 파일 변경 시 자동 컴파일
+  // mode: "development", // 개발 중이라는 의미 (코드 압축 X 에러 쉽게 확인 O)
+  // watch: true, // watch 모드 : 파일 변경 시 자동 컴파일
   plugins: [
     // css 추출해서 js 외 별도의 css 파일 만들어줌
     new MiniCssExtractPlugin({

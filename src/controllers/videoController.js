@@ -102,7 +102,7 @@ export const watch = async (req, res) => {
     return res.render("404", { pageTitle: "Video Not Found" });
   }
   // video 존재하는 경우
-  console.log(video);
+  // console.log(video);
   return res.render("watch", { pageTitle: video.title, video });
 };
 
@@ -166,3 +166,20 @@ export const deleteVideo = async (req, res) => {
 //   console.log(video);
 //   return res.redirect("/");
 // };
+
+export const registerView = async (req, res) => {
+  const { id } = req.params; // URL로부터 id 가져오기
+  // console.log(id);
+  console.log(req.params);
+  console.log(req.query);
+  console.log(req.body);
+  const video = await Video.findById(id);
+  if (!video) {
+    // 비디오 찾지 못한 경우
+    return res.sendStatus(404);
+  }
+  // video가 존재할 경우 조회수 1 증가
+  video.meta.views = video.meta.views + 1;
+  await video.save();
+  return res.sendStatus(200); // ok 의미로 200 status code 전송
+};
