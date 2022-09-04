@@ -4,7 +4,7 @@
   "description": "The Wetube Clone built using NodeJS, Express, Mongo and ES6",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sujinjwa/wetube-reloaded.git"
+    "url": "git+https://github.com/sujinjwa/wetube-sujin.git"
   },
   "scripts": {
     "start": "node build/init.js",
@@ -17,9 +17,9 @@
   "author": "Sujin Jo",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sujinjwa/wetube-reloaded/issues"
+    "url": "https://github.com/sujinjwa/wetube-sujin/issues"
   },
-  "homepage": "https://github.com/sujinjwa/wetube-reloaded#readme",
+  "homepage": "https://github.com/sujinjwa/wetube-sujind#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "connect-mongo": "^4.6.0",
