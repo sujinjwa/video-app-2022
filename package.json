@@ -4,7 +4,7 @@
   "description": "The Wetube Clone built using NodeJS, Express, Mongo and ES6",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sujinjwavideo-app-2022.git"
+    "url": "git+https://github.com/sujinjwa/video-app-2022.git"
   },
   "scripts": {
     "start": "node build/init.js",
