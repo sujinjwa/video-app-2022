@@ -3,7 +3,7 @@ extends base.pug
 block content
   // videos의 control 속성 없앰
   #videoContainer(data-id=video.id)
-    video(src=`/${video.videoUrl}`)
+    video(src=`${video.videoUrl}`)
     #videoControls
       .videoControls__row1
         input#timeline(type="range", step="1", min="0", value=0)

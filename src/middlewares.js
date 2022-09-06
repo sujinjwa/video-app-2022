@@ -1,4 +1,6 @@
+import { S3Client } from "@aws-sdk/client-s3";
 import multer from "multer";
+import multerS3 from "multer-s3";
 
 export const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "Wetube";
@@ -26,15 +28,32 @@ export const publicOnlyMiddleware = (req, res, next) => {
   }
 };
 
+const s3 = new S3Client({
+  region: "ap-northeast-2",
+  credentials: {
+    accessKeyId: process.env.AWS_ID,
+    secretAccessKey: process.env.AWS_SECRET,
+  },
+});
+
+const multerUploader = multerS3({
+  s3: s3,
+  bucket: "wetube-sujin", // AWS bucket 이름 넣기
+  acl: "public-read",
+});
+
 export const avatarUpload = multer({
   dest: "uploads/avatars/",
   limits: {
     fileSize: 3000000, // 단위: bytes
   },
+  storage: multerUploader,
 });
+
 export const videoUpload = multer({
   dest: "uploads/videos/",
   limits: {
     fileSize: 100000000,
   },
+  storage: multerUploader,
 });
