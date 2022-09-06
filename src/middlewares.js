@@ -45,7 +45,7 @@ const multerUploader = multerS3({
 export const avatarUpload = multer({
   dest: "uploads/avatars/",
   limits: {
-    fileSize: 3000000, // 단위: bytes
+    fileSize: 3000, // 단위: bytes // 0여섯개
   },
   storage: multerUploader,
 });
@@ -53,7 +53,7 @@ export const avatarUpload = multer({
 export const videoUpload = multer({
   dest: "uploads/videos/",
   limits: {
-    fileSize: 100000000,
+    fileSize: 10000, // 0 일곱개
   },
   storage: multerUploader,
 });
