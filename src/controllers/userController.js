@@ -69,6 +69,7 @@ export const postEdit = async (req, res) => {
     file,
   } = req;
   const isHeroku = process.env.NODE_ENV === "production";
+  console.log(isHeroku);
   // console.log(file);
   // const id = req.session.user.id;
   // const { name, email, username, location } = req.body; // form으로부터 받아옴. 이때, form의 input name 태그 이름과 동일하게 받아와야 함

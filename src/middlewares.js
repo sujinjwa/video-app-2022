@@ -10,6 +10,7 @@ export const localsMiddleware = (req, res, next) => {
   // console.log(req.session.user);
   res.locals.isHeroku = isHeroku; // heroku 있는지 없는지 템플릿에서 확인 가능
   next();
+  console.log(res.locals.isHeroku);
 };
 
 export const protectorMiddleware = (req, res, next) => {
