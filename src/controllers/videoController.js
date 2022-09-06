@@ -115,17 +115,17 @@ export const postUpload = async (req, res) => {
   const {
     user: { _id },
   } = req.session;
-  const { location: videoUrl } = req.file;
+  const video = req.file;
   const { title, description, hashtags } = req.body; // form 통해 사용자로부터 받은 data
   // 새로운 Video Model 생성
 
-  console.log(req.file);
+  const isHeroku = process.env.NODE_ENV === "production";
 
   try {
     const newVideo = await Video.create({
       title: title,
       description: description,
-      videoUrl,
+      videoUrl: isHeroku ? video.location : video.path,
       hashtags: Video.formatHashtags(hashtags),
       owner: _id,
     });

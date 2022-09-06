@@ -68,7 +68,7 @@ export const postEdit = async (req, res) => {
     body: { name, email, username, location },
     file,
   } = req;
-
+  const isHeroku = process.env.NODE_ENV === "production";
   // console.log(file);
   // const id = req.session.user.id;
   // const { name, email, username, location } = req.body; // form으로부터 받아옴. 이때, form의 input name 태그 이름과 동일하게 받아와야 함
@@ -95,7 +95,7 @@ export const postEdit = async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
-      avatarUrl: file ? file.location : avatarUrl,
+      avatarUrl: file ? (isHeroku ? file.location : file.path) : avatarUrl,
       name,
       email,
       username,
@@ -103,7 +103,6 @@ export const postEdit = async (req, res) => {
     },
     { new: true }
   );
-
   // session 정보도 같이 업데이트
   // const user = await User.findOne({ id: _id }); // _id 와 동일한 id를 가지는 user (현재 로그인하고 있는 유저) db에서 찾기
   req.session.user = updatedUser; // req.session.user를 find된 위 user로 업데이트

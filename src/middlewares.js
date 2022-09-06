@@ -5,9 +5,10 @@ import multerS3 from "multer-s3";
 export const localsMiddleware = (req, res, next) => {
   res.locals.siteName = "Wetube";
   res.locals.loggedIn = Boolean(req.session.loggedIn);
-  res.locals.loggedInUser = req.session.user;
+  res.locals.loggedInUser = req.session.user || {}; // || {} 추가
   // console.log(res.locals);
   // console.log(req.session.user);
+  res.locals.isHeroku = isHeroku; // heroku 있는지 없는지 템플릿에서 확인 가능
   next();
 };
 
@@ -36,7 +37,16 @@ const s3 = new S3Client({
   },
 });
 
-const multerUploader = multerS3({
+const isHeroku = process.env.NODE_ENV === "production";
+
+const s3ImageUploader = multerS3({
+  s3: s3,
+  bucket: "wetube-sujin", // AWS bucket 이름 넣기
+  Key: "images/",
+  acl: "public-read",
+});
+
+const s3VideoUploader = multerS3({
   s3: s3,
   bucket: "wetube-sujin", // AWS bucket 이름 넣기
   acl: "public-read",
@@ -45,15 +55,15 @@ const multerUploader = multerS3({
 export const avatarUpload = multer({
   dest: "uploads/avatars/",
   limits: {
-    fileSize: 3000, // 단위: bytes // 0여섯개
+    fileSize: 3000000, // 단위: bytes // 0여섯개
   },
-  storage: multerUploader,
+  storage: isHeroku ? s3ImageUploader : undefined,
 });
 
 export const videoUpload = multer({
   dest: "uploads/videos/",
   limits: {
-    fileSize: 10000, // 0 일곱개
+    fileSize: 10000000, // 0 일곱개
   },
-  storage: multerUploader,
+  storage: isHeroku ? s3VideoUploader : undefined,
 });
