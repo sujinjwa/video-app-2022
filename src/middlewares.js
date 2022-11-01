@@ -10,14 +10,15 @@ export const localsMiddleware = (req, res, next) => {
   // console.log(req.session.user);
   res.locals.isHeroku = isHeroku; // heroku 있는지 없는지 템플릿에서 확인 가능
   next();
-  console.log(res.locals.isHeroku);
+  // console.log(res.locals.isHeroku);
 };
 
 export const protectorMiddleware = (req, res, next) => {
   // 로그인 돼있지 않은 유저는 로그인 페이지로 리디렉션
   if (req.session.loggedIn) {
-    next(); // 유저가 로그인된 경우 next() 함수 호출
+    return next(); // 유저가 로그인된 경우 next() 함수 호출
   } else {
+    req.flash("error", "Not authorized");
     return res.redirect("/login");
   }
 };
@@ -26,6 +27,7 @@ export const publicOnlyMiddleware = (req, res, next) => {
   if (!req.session.loggedIn) {
     return next(); // loggedIn 돼있지 않다면, next() 함수 호출
   } else {
+    req.flash("error", "Not authorized");
     return res.redirect("/"); // 로그인된 유저라면 home 화면으로 리디렉션
   }
 };
