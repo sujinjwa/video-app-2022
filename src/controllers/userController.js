@@ -342,6 +342,7 @@ export const finishGithubLogin = async (req, res) => {
 
 export const logout = (req, res) => {
   req.session.destroy(); // 세션 없애기
+  req.flash("info", "Bye Bye");
   return res.redirect("/"); // 홈 화면으로 리디렉션
 };
 

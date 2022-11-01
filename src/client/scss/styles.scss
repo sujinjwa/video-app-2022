@@ -52,3 +52,32 @@ html::-webkit-scrollbar-thumb {
 html::-webkit-scrollbar-track {
   background-color: $bg;
 }
+
+@keyframes goAway {
+  from {
+    transform: none;
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+}
+
+// 경고창
+.message {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 200px;
+  padding: 20px;
+  border-radius: 30%;
+  text-align: center;
+  animation: goAway 2s ease-in-out forwards;
+  &.error {
+    background-color: tomato;
+    color: white;
+  }
+}

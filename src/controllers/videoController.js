@@ -38,6 +38,7 @@ export const getEdit = async (req, res) => {
   }
 
   if (String(video.owner) !== String(_id)) {
+    req.flash("error", "Not authorized");
     // 현재 로그인한 유저가 해당 비디오를 업로드한 유저가 아닌 경우
     return res.status(403).redirect("/"); // 홈 화면으로 렌더링
   }
