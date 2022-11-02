@@ -126,7 +126,7 @@ export const postUpload = async (req, res) => {
     const newVideo = await Video.create({
       title: title,
       description: description,
-      videoUrl: isHeroku ? video.location : video.path,
+      videoUrl: isHeroku ? video.location : "/" + video.path,
       hashtags: Video.formatHashtags(hashtags),
       owner: _id,
     });
@@ -187,4 +187,11 @@ export const registerView = async (req, res) => {
   video.meta.views = video.meta.views + 1;
   await video.save();
   return res.sendStatus(200); // ok 의미로 200 status code 전송
+};
+
+export const createComment = (req, res) => {
+  console.log(req.params);
+  console.log(req.body);
+  console.log(req.body.text, req.body.rating);
+  return res.end();
 };
