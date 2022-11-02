@@ -18,6 +18,7 @@ app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views"); // process.cwd() = wetube-clone-2022 폴더
 app.use(logger);
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // console.log(process.env.COOKIE_SECRET);
 // router 앞에서 session 미들웨어 추가
