@@ -94,9 +94,9 @@ export const search = async (req, res) => {
 export const watch = async (req, res) => {
   // const id = req.params.id;
   const { id } = req.params;
-  const video = await Video.findById(id).populate('owner'); // req.params.id 통해 비디오 찾기
+  const video = await Video.findById(id).populate('owner').populate('comments'); // req.params.id 통해 비디오 찾기
   // populate(relationship)을 통해 video의 owner 부분을 User의 id로 바꿔주기
-  // console.log(video);
+  console.log(video);
   // const owner = await User.findById(video.owner); // 비디오의 owner 통해 업로드한 유저 찾기
   if (!video) {
     // (!video) 도 가능
@@ -203,6 +203,7 @@ export const createComment = async (req, res) => {
   }
 
   const comment = await Comment.create({ text, owner: user._id, video: id });
-
+  video.comments.push(comment._id);
+  video.save();
   return res.sendStatus(200);
 };
