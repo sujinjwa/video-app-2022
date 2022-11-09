@@ -105,3 +105,32 @@
     }
   }
 }
+.video__add-comments {
+  margin: 20px 0px;
+  form#commentForm {
+    width: 800px;
+    display: flex;
+    align-items: center;
+    textarea {
+      width: 80%;
+      height: 80px;
+      padding: 15px;
+      margin-right: 20px;
+    }
+    button {
+      width: 15%;
+      padding: 10px;
+    }
+  }
+}
+
+.video__comments {
+  li {
+    background-color: white;
+    color: black;
+    width: 300px;
+    border-radius: 30px;
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+}

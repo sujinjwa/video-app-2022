@@ -6,7 +6,7 @@ block content
     video(src=`${video.videoUrl}`)
     #videoControls
       .videoControls__row1
-        input#timeline(type="range", step="1", min="0", value=0)
+        input#timeline(type='range', step='1', min='0', value=0)
         #times
           span#currentTime 00:00
           span= ` / `
@@ -17,12 +17,9 @@ block content
             i.fa-solid.fa-play
           button#mute
             i.fa-solid.fa-volume-high
-          input#volume(type="range", step="0.1", value=0.5, min="0", max="1")
+          input#volume(type='range', step='0.1', value=0.5, min='0', max='1')
         div
           button#fullScreen 
-            |
-            |
-            |
             |
             i.fa-solid.fa-expand
 
@@ -46,23 +43,24 @@ block content
     a(href=`${video.id}/edit`) Edit Video &rarr;
     br
     a(href=`${video.id}/delete`) Delete Video &rarr;
-
   if loggedIn
-    .video__comments 
-      |
-      |
-      |
+    .video__add-comments 
       |
       form#commentForm.video__comment-form
         textarea(
-          name="",
-          cols="30",
-          rows="10",
-          placeholder="Write a nice comment...."
+          name='',
+          cols='30',
+          rows='10',
+          placeholder='Write a nice comment....'
         )
         button Add Comment
+  .video__comments
+    ul 
+      |
+      each comment in video.comments.reverse()
+        li= comment.text
 
 block scripts
-  script(src="/assets/js/videoPlayer.js")
+  script(src='/assets/js/videoPlayer.js')
   if loggedIn
-    script(src="/assets/js/commentSection.js")
+    script(src='/assets/js/commentSection.js')
