@@ -125,7 +125,11 @@
 }
 
 .video__comments {
+  display: flex;
   li {
+    i {
+      margin-right: 5px;
+    }
     background-color: white;
     color: black;
     width: 300px;

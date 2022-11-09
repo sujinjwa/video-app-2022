@@ -21,6 +21,8 @@ block content
         div
           button#fullScreen 
             |
+            |
+            |
             i.fa-solid.fa-expand
 
   //- p= video.description
@@ -46,6 +48,8 @@ block content
   if loggedIn
     .video__add-comments 
       |
+      |
+      |
       form#commentForm.video__comment-form
         textarea(
           name='',
@@ -57,8 +61,12 @@ block content
   .video__comments
     ul 
       |
+      |
+      |
       each comment in video.comments.reverse()
-        li= comment.text
+        li
+          i.fas.fa-comment
+          | #{ comment.text }
 
 block scripts
   script(src='/assets/js/videoPlayer.js')
