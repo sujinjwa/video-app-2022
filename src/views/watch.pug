@@ -23,6 +23,11 @@ block content
             |
             |
             |
+            |
+            |
+            |
+            |
+            |
             i.fa-solid.fa-expand
 
   //- p= video.description
@@ -50,6 +55,8 @@ block content
       |
       |
       |
+      |
+      |
       form#commentForm.video__comment-form
         textarea(
           name='',
@@ -62,11 +69,10 @@ block content
     ul 
       |
       |
-      |
       each comment in video.comments.reverse()
-        li
+        li.video__comment
           i.fas.fa-comment
-          | #{ comment.text }
+          span  #{ comment.text }
 
 block scripts
   script(src='/assets/js/videoPlayer.js')
